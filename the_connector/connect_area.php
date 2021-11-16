@@ -6,7 +6,7 @@ $database = 'ACES_DB';
 
 //offline, chanage this to your localhost username and password
 $user_name = 'root';
-$password = 'Nkenyor33&&&&=&&&&';
+$password = '';
 $connect = mysqli_connect($host_name, $user_name, $password, $database);
 
 if (mysqli_connect_errno()) {
