@@ -1,20 +1,45 @@
 <?php
+    include "the_connector/connect_area.php";
+    include "users/get_users.php";
+    include "hashing/all_hash_algo.php";
+    include "sanitizer/clean_up.php";
 
-//include all that you may need.
+    // Array for error responses
+    $array = ["status" => "false", "msg" => "No possible connection"];
 
-//get the parameters for login(email and password) from the POST request
+    //get the parameters for login(email and password) from the POST request
     //you can use GET METHOD to test and for simplicity but the Project will be using POST since login details are sensitive.
+    if (isset($_POST["email"]) and isset($_POST["password"])) {
+	    $email = cleaner_4_DB($_POST["email"]);
 
-//check if a user exist with the email(Take example from the 'register_user.php' page)
+        // Get users password seperately so as to compare with the ACES_OPEN_SOURCE string
+        $password = cleaner_4_DB($_POST["password"]);
 
-//get other details of the user by using his email
+        // Concatenate it with the string it was hashed with, so as to compare correctly
+        $password = "ACES_OPEN_SOURCE{$password}";
 
-//only users who have verified == 1 in the database will be able to login.
+        // Check if a user exist with the email (Take example from the 'register_user.php' page)
+        $user_already = num_count_email($connect, $email);
 
-//compare the password gotten from the user with the already hashed password gotten from the database.
-    //because we used BCRYPT, you will use password_verify($password_4rm_user, $hashed_in_DB)
-    //if the condition is true, then the password is thesame as the hashed one. 
+        if ($user_already >= 1) { // User exists
+            //get other details of the user by using his email
+            $user_existance = get_user_by_email($connect, $email);
 
-//Apart from the Json structure that will be set out, Some Cookies and sessions will be created if the login details are correct.
+            //only users who have verified == 1 in the database will be able to login.
+            if ($user_existance["verified"] === 1) {
+                //compare the password gotten from the user with the already hashed password gotten from the database.
+                if (password_verify($password, $user_existance["password"])) {
+                    $array = ["status" => "true", "user" => $user_existance, "msg" => "Login Successful"];
+                } else {
+                    $array = ["status" => "false", "msg" => "Your password is incorrect"];
+                }
+            } else {
+                $array = ["status" => "false", "msg" => "This account is not verified to log in"];
+            }
+        } else {
+            $array = ["status" => "false", "msg" => "This account is not registered"];
+        }
+    }
 
+    echo json_encode($array);
 ?>
