@@ -34,7 +34,7 @@
                     $array = ["status" => "false", "msg" => "Your password is incorrect"];
                 }
             } else {
-                $array = ["status" => "false", "msg" => "This account is not verified to log in"];
+                $array = ["status" => "false", "msg" => "This account is not verified to log in. We have sent an email to help you verify your account. check your inbox or spam box."];
             }
         } else {
             $array = ["status" => "false", "msg" => "This account is not registered"];
