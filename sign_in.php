@@ -3,6 +3,7 @@
     include "users/get_users.php";
     include "hashing/all_hash_algo.php";
     include "sanitizer/clean_up.php";
+    include "publicity/mailer.php";
 
     // Array for error responses
     $array = ["status" => "false", "msg" => "No possible connection"];
@@ -30,10 +31,28 @@
                 //compare the password gotten from the user with the already hashed password gotten from the database.
                 if (password_verify($password, $user_existance["password"])) {
                     $array = ["status" => "true", "user" => $user_existance, "msg" => "Login Successful"];
+                    
+                    session_start();
+    				$_SESSION['uname'] = $user_existance["username"];
+    				$_SESSION['userid'] = $user_existance["id"];
+    				$_SESSION['user_code'] = $user_existance["unique_co"];
+    				$_SESSION['email'] = $email;
+    				
+    				ob_start();
+    				setcookie('userid', $user_existance["id"], time()+500*24*60*60*1000, '/'); 	
+    				setcookie('uname', $user_existance["username"], time()+500*24*60*60*1000, '/'); 	
+    				setcookie('email', $email, time()+500*24*60*60*1000, '/'); 	
+		        
                 } else {
                     $array = ["status" => "false", "msg" => "Your password is incorrect"];
                 }
             } else {
+                mail_on_signup($email, $user_existance["unique_co"]);
+                session_start();
+				$_SESSION['uname'] = $user_existance["username"];
+				$_SESSION['userid'] = $user_existance["id"];
+				$_SESSION['user_code'] = $user_existance["unique_co"];
+				$_SESSION['email'] = $email;
                 $array = ["status" => "false", "msg" => "This account is not verified to log in. We have sent an email to help you verify your account. check your inbox or spam box."];
             }
         } else {

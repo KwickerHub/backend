@@ -45,7 +45,18 @@ if( isset($_POST["email"]) and isset($_POST["password"])){
 				#$user_id = $user_existance["id"];
 				#$code = $user_existance["unique_co"];
 				$array = ["status"=>"true", "user"=>$user_existance, "msg"=>"Registration Successful. Check your mail box for our verification link."];
-				mail_on_signup($email);
+				mail_on_signup($email, $randt);
+				session_start();
+				$_SESSION['uname'] = $user_existance["username"];
+				$_SESSION['userid'] = $user_existance["id"];
+				$_SESSION['user_code'] = $user_existance["unique_co"];
+				$_SESSION['email'] = $email;
+				
+				ob_start();
+				setcookie('userid', $user_existance["id"], time()+500*24*60*60*1000, '/'); 	
+				setcookie('uname', $user_existance["username"], time()+500*24*60*60*1000, '/'); 	
+				setcookie('email', $email, time()+500*24*60*60*1000, '/'); 
+    				
 			}else{
 				$array = ["status"=>"false", "msg"=>"We had some issues with computing your details"];
 			}

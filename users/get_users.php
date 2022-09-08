@@ -1,8 +1,8 @@
 <?php
 
-function get_user_details($id){
+function get_user_details($connect, $id){
 		$user_id= $id;
-		require "the_connector/connect_area.php";
+		//require "../the_connector/connect_area.php";
 		$stmt = $connect->prepare("SELECT * FROM `clients` WHERE `id`=?;");
 		$stmt->bind_param("i", $user_id);
 		$stmt->execute();
