@@ -8,12 +8,6 @@ $user_name = 'root';
 $password = '';
 
 
-//online
-$host_name = 'localhost';
-$database = 'kwicsczj_ACES_DB';
-$user_name = 'kwicsczj_admin';
-$password = 'admin0@@=@@';
-
 $connect = mysqli_connect($host_name, $user_name, $password, $database);
 
 if (mysqli_connect_errno()) {
