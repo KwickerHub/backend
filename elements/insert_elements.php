@@ -7,15 +7,12 @@ include "generator/generator.php";
 include "publicity/mailer.php";
 
 $array = ["status"=>"false", "msg"=>"No possible connection"];
-if( isset($_POST["email"]) and isset($_POST["password"])){
-	$username = cleaner_4_DB($_POST["username"]);
-	$email = cleaner_4_DB($_POST["email"]);
-	$password = cleaner_4_DB($_POST["password"]);
+if( isset($_POST["element_description"]) and isset($_POST["element_name"])){
+	$elem = cleaner_4_DB($_POST["element_name"]);
+	$elem_desc = cleaner_4_DB($_POST["element_description"]);
+    #$elem_desc = cleaner_4_DB($_POST["element_description"]);
 	$device = isset($_POST["device"]) ? cleaner_4_DB($_POST["device"]) : "";
 	$add_on = isset($_POST["addon"]) ? cleaner_4_DB($_POST["addon"]) : "";
-
-	$public_hash = generate_strings(16);
-	$private_hash = salt_and_BCRYPT($public_hash);
 
 	$randt = generate_faster();
 	$verified = 0;
@@ -33,9 +30,9 @@ if( isset($_POST["email"]) and isset($_POST["password"])){
 		$array = ["status"=>"false", "msg"=>"This Account is already in existance."];
 	}else if($user_already < 1 AND (filter_var($email, FILTER_VALIDATE_EMAIL))  ){
 
-		 $inserter = $connect->prepare("INSERT INTO `clients`(`id`, `username`, `email`, `password`, `verified`, `unique_co`, `public_hash`, `private_hash`, `last_in`, `devices`, `addon`, `date_time`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		 $inserter = $connect->prepare("INSERT INTO `clients`(`id`, `username`, `email`, `password`, `verified`, `unique_co`, `last_in`, `devices`, `addon`, `date_time`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		
-		$inserter->bind_param("sssisssss", $username, $email, $password, $verified, $randt, $public_hash, $private_hash, $date_time, $device, $add_on, $date_time );		
+		$inserter->bind_param("sssisssss", $username, $email, $password, $verified, $randt, $date_time, $device, $add_on, $date_time );		
 		$inserter->execute();
 
 		if (!$inserter){
