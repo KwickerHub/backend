@@ -67,6 +67,33 @@ function get_all_raw_style(){
 	$stmt->close();
 	return $result;
 }
+
+function get_style_by_name($connect, $style){
+    //require "../the_connector/connect_area.php";
+    $stmt = $connect->prepare("SELECT * FROM `style` WHERE `style_name`=?;");
+    $stmt->bind_param("s", $style);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if(!$stmt){
+        echo "could not get the results";
+        return array();
+    }else{
+        $row = $result->fetch_assoc();
+        return $row;
+    }
+    $stmt->close();
+}
+
+function num_check_style($connect, $style){
+    #require "the_connector/connect_area.php";
+	$num_rows = 0;
+    $stmt = $connect->prepare("SELECT COUNT(*) FROM `style` WHERE `style_name`=?");
+    $stmt->bind_param("s", $style);
+    $stmt->execute();
+    $stmt->bind_result($num_rows);
+    $stmt->fetch();
+    return $num_rows;
+}
 	
 if (isset($_GET['echo'])) {
     //print("entered here");

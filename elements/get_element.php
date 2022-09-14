@@ -2,10 +2,26 @@
 
 //will contain code to select from this table and more SQL Actions
 
-function get_elem_details($id){
-    require "../the_connector/connect_area.php";
-    $stmt = $connect->prepare("SELECT * FROM `elements` WHERE `elem_id`=?;");
+function get_elem_details($connect, $id){
+    //require "../the_connector/connect_area.php";
+    $stmt = $connect->prepare("SELECT * FROM `elements` WHERE `tag_id`=?;");
     $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if(!$stmt){
+        echo "could not get the results";
+        return array();
+    }else{
+        $row = $result->fetch_assoc();
+        return $row;
+    }
+    $stmt->close();
+}
+
+function get_elem_by_name($connect, $tag_name){
+    //require "../the_connector/connect_area.php";
+    $stmt = $connect->prepare("SELECT * FROM `elements` WHERE `tag_name`=?;");
+    $stmt->bind_param("s", $tag_name);
     $stmt->execute();
     $result = $stmt->get_result();
     if(!$stmt){
@@ -50,16 +66,26 @@ function get_all_raw_elem(){
 
     if(!$stmt){
         $result = array("status"=>"false", "msg"=>"Could not get the coins symbols.");
-
     }elseif($stmt){
         while ($stmt->fetch()) {
-            $result .= '<span ondragstart="elem_drag(event, \'div\')" draggable="true" class="the_bottom_elems" onclick="add_element_2_dashboard(\'div\')">div</span>';
+            $result .= '<span ondragstart="elem_drag(event, \''.$elem_name.'\')" draggable="true" class="the_bottom_elems" onclick="add_element_2_dashboard(\''.$elem_name.'\')">'.$elem_name.'</span>';
             #array_push($result, array( "id"=>$elem_id, "user_id"=>$user_id, "elem_name"=>$elem_name, "type"=>$type, "elem_default"=>$elem_default, "elem_values"=>$elem_values, "addon"=>$addon, "description"=>$description, "likes"=>$likes, "property"=>$property, "date_time"=>$date_time) );
         }
     }
 	
 	$stmt->close();
 	return $result;
+}
+
+function num_check_html_tag($connect, $tag_name){
+    #require "the_connector/connect_area.php";
+	$num_rows = 0;
+    $stmt = $connect->prepare("SELECT COUNT(*) FROM `elements` WHERE `tag_name`=?");
+    $stmt->bind_param("s", $tag_name);
+    $stmt->execute();
+    $stmt->bind_result($num_rows);
+    $stmt->fetch();
+    return $num_rows;
 }
 	
 if (isset($_GET['echo'])) {
