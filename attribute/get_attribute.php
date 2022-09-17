@@ -68,6 +68,34 @@ function get_all_raw_attr(){
     $result .= "</ul>";
 	return $result;
 }
+
+function get_attr_by_name($connect, $attr){
+    //require "../the_connector/connect_area.php";
+    $stmt = $connect->prepare("SELECT * FROM `attributes` WHERE `attr_name`=?;");
+    $stmt->bind_param("s", $attr);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if(!$stmt){
+        echo "could not get the results";
+        return array();
+    }else{
+        $row = $result->fetch_assoc();
+        return $row;
+    }
+    $stmt->close();
+}
+
+function num_check_attr($connect, $attr){
+    #require "the_connector/connect_area.php";
+	$num_rows = 0;
+    $stmt = $connect->prepare("SELECT COUNT(*) FROM `attributes` WHERE `attr_name`=?");
+    $stmt->bind_param("s", $attr);
+    $stmt->execute();
+    $stmt->bind_result($num_rows);
+    $stmt->fetch();
+    return $num_rows;
+}
+
 	
 if (isset($_GET['echo'])) {
     //print("entered here");

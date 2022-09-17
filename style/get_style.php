@@ -68,6 +68,7 @@ function get_all_raw_style(){
 	return $result;
 }
 
+
 function get_style_by_name($connect, $style){
     //require "../the_connector/connect_area.php";
     $stmt = $connect->prepare("SELECT * FROM `style` WHERE `style_name`=?;");
