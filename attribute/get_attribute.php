@@ -55,9 +55,9 @@ function get_all_raw_attr(){
     }elseif($stmt){
         while ($stmt->fetch()) {
             $result .= '<li class="each_item">
-                <input onchange="attr_changed(\'height\')" id="attr_height_status" class="the_check_side" type="checkbox" checked value="yes" name="_height_state">
-                <label>Height</label>
-                <input onkeyup="attr_changed(\'height\')" id="attr_height" list="size" class="the_input_side" type="text" name="attr_height_value">
+                <input onchange="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$attr_name.'_state">
+                <label>'.$attr_name.'</label>
+                <input onkeyup="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'" list="'.$type.'" class="the_input_side" type="text" name="attr_'.$attr_name.'_value">
             </li>';
             //$result .= "dance dance to the debug";
             #array_push($result, array( "id"=>$attr_id, "user_id"=>$user_id, "attr_name"=>$attr_name, "type"=>$type, "attr_default"=>$attr_default, "attr_values"=>$attr_values, "addon"=>$addon, "description"=>$description, "likes"=>$likes, "property"=>$property, "date_time"=>$date_time) );

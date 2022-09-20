@@ -56,9 +56,9 @@ function get_all_raw_style(){
     }elseif($stmt){
         while ($stmt->fetch()) {
             $result .= '<li class="each_item">
-                <input onchange="style_changed(\'height\')" id="style_height_status" class="the_check_side" type="checkbox" checked value="yes" name="_height_state">
-                <label>Height</label>
-                <input onkeyup="style_changed(\'height\')" id="style_height" list="size" class="the_input_side" type="text" name="style_height_value">
+                <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$style_name.'_state">
+                <label>'.$style_name.'</label>
+                <input onkeyup="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'" list="size" class="the_input_side" type="text" name="style_'.$style_name.'_value">
             </li>';
             #array_push($result, array( "id"=>$style_id, "user_id"=>$user_id, "style_name"=>$style_name, "type"=>$type, "style_default"=>$style_default, "style_values"=>$style_values, "addon"=>$addon, "description"=>$description, "likes"=>$likes, "property"=>$property, "date_time"=>$date_time) );
         }
