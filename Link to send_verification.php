@@ -1,1 +1,0 @@
-/var/www/html/ACES_OPEN_SOURCE/backend/send_verification.php
