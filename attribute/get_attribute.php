@@ -45,7 +45,19 @@ function get_all_raw_attr(){
     require "../the_connector/connect_area.php";
 
 	$result = "<ul>";
-    $stmt = $connect->prepare("SELECT `attr_id`, `user_id`, `attr_name`, `type`, `attr_default`, `attr_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `attributes`");
+    $display_type = isset($_GET["display_by"]) ? ($_GET["display_by"]) : "";
+    if($display_type == "like"){
+        $stmt = $connect->prepare("SELECT `attr_id`, `user_id`, `attr_name`, `type`, `attr_default`, `attr_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `attributes` ORDER BY `likes` DESC ");
+    } else if($display_type == "date-new"){
+        $stmt = $connect->prepare("SELECT `attr_id`, `user_id`, `attr_name`, `type`, `attr_default`, `attr_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `attributes` ORDER BY `date_time` DESC ");
+    } else if($display_type == "date-old"){
+        $stmt = $connect->prepare("SELECT `attr_id`, `user_id`, `attr_name`, `type`, `attr_default`, `attr_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `attributes` ORDER BY `date_time` ASC ");
+    }
+    else{
+        $stmt = $connect->prepare("SELECT `attr_id`, `user_id`, `attr_name`, `type`, `attr_default`, `attr_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `attributes`");
+    }
+    
+    //$stmt = $connect->prepare("SELECT `attr_id`, `user_id`, `attr_name`, `type`, `attr_default`, `attr_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `attributes`");
     $stmt->execute();
     $stmt->bind_result($attr_id, $user_id, $attr_name, $type, $attr_default, $attr_values, $addon, $description, $likes, $property, $date_time );
 

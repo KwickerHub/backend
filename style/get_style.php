@@ -45,8 +45,20 @@ function get_all_style(){
 function get_all_raw_style(){
     require "../the_connector/connect_area.php";
 
-	$result = "";
-    $stmt = $connect->prepare("SELECT `style_id`, `user_id`, `style_name`, `type`, `style_default`, `style_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `style`");
+	$result = "<ul>";
+    $display_type = isset($_GET["display_by"]) ? ($_GET["display_by"]) : "";
+    if($display_type == "like"){
+        $stmt = $connect->prepare("SELECT `style_id`, `user_id`, `style_name`, `type`, `style_default`, `style_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `style` ORDER BY `likes` DESC ");
+    } else if($display_type == "date-new"){
+        $stmt = $connect->prepare("SELECT `style_id`, `user_id`, `style_name`, `type`, `style_default`, `style_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `style` ORDER BY `date_time` DESC ");
+    } else if($display_type == "date-old"){
+        $stmt = $connect->prepare("SELECT `style_id`, `user_id`, `style_name`, `type`, `style_default`, `style_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `style` ORDER BY `date_time` ASC ");
+    }
+    else{
+        $stmt = $connect->prepare("SELECT `style_id`, `user_id`, `style_name`, `type`, `style_default`, `style_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `style`");
+    }
+
+    //$stmt = $connect->prepare("SELECT `style_id`, `user_id`, `style_name`, `type`, `style_default`, `style_values`, `addon`, `description`, `likes`, `property`, `date_time` FROM `style`");
     $stmt->execute();
     $stmt->bind_result($style_id, $user_id, $style_name, $type, $style_default, $style_values, $addon, $description, $likes, $property, $date_time );
 
@@ -65,6 +77,7 @@ function get_all_raw_style(){
     }
 	
 	$stmt->close();
+    $result .= "</ul>";
 	return $result;
 }
 

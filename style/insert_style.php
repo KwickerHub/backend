@@ -8,6 +8,7 @@ include "../sanitizer/clean_up.php";
 //include "../publicity/mailer.php";
 session_start();
 $array = ["status"=>"false", "msg"=>"No possible connection"];
+$output = "";
 if( isset($_POST["style_name"]) and isset($_POST["description"]) and isset($_POST["type"]) ){
     $user_id = isset($_POST["userid"]) ? cleaner_4_DB($_POST["userid"]) : 0; //check if id was sent from POST
 	$user_id = isset($_SESSION["userid"]) ? cleaner_4_DB($_SESSION["userid"]) : 0; // session should override POST else 0 as default

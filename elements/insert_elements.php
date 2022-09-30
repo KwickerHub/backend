@@ -8,6 +8,7 @@ include "../sanitizer/clean_up.php";
 //include "../publicity/mailer.php";
 session_start();
 $array = ["status"=>"false", "msg"=>"No possible connection"];
+$output = "";
 if( isset($_POST["element_description"]) and isset($_POST["element_name"])){
 	$elem = cleaner_4_DB($_POST["element_name"]);
 	$tag_type = isset($_POST["tag_type"]) ? cleaner_4_DB($_POST["tag_type"]) : "";
@@ -19,6 +20,7 @@ if( isset($_POST["element_description"]) and isset($_POST["element_name"])){
 	$tag_description = cleaner_4_DB($_POST["element_description"]);
 	$default_style = isset($_POST["tag_type"]) ? cleaner_4_DB($_POST["tag_type"]) : "";
 	$addon = isset($_POST["addon"]) ? cleaner_4_DB($_POST["addon"]) : ""; 
+	$likes = 0;
 	$output = isset($_POST["output"]) ? cleaner_4_DB($_POST["output"]) : "text"; 
 	$date_time = date('Y-m-d H:i:s');
 
@@ -28,9 +30,9 @@ if( isset($_POST["element_description"]) and isset($_POST["element_name"])){
 		$array = ["status"=>"false", "msg"=>"This HTML_TAG already exist. If you feel you have better description to add to this HTML TAG, Do well to reach out to 'OPEN_SOURCE_IMPROVEMENT' via email: support@kwickerhub.com or nkenyor@gmail.com "];
 	}else if($tag_already < 1 AND $elem != ""  ){
 
-		$inserter = $connect->prepare("INSERT INTO `elements` (`tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `addon`, `date_time`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);");
+		$inserter = $connect->prepare("INSERT INTO `elements` (`tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `likes`, `addon`, `date_time`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);");
 		
-		$inserter->bind_param("issssss", $user_id, $elem, $tag_type, $tag_example, $tag_description, $default_style, $addon );		
+		$inserter->bind_param("issssiss", $user_id, $elem, $tag_type, $tag_example, $tag_description, $default_style, $likes, $addon );		
 		$inserter->execute();
 
 		if (!$inserter){

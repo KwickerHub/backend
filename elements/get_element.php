@@ -38,9 +38,9 @@ function get_elem_by_name($connect, $tag_name){
 function get_all_elem(){
 	require "../the_connector/connect_area.php";
 	$result = array();
-    $stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `addon`, `date_time` FROM `elements`");
+    $stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `likes`,  `addon`, `date_time` FROM `elements`");
     $stmt->execute();
-    $stmt->bind_result($elem_id, $user_id, $elem_name, $type, $elem_example, $description, $elem_default, $addon, $date_time );
+    $stmt->bind_result($elem_id, $user_id, $elem_name, $type, $elem_example, $description, $elem_default, $likes, $addon, $date_time );
 
     if(!$stmt){
         $result = array("status"=>"false", "msg"=>"Could not get the coins symbols.");
@@ -59,16 +59,32 @@ function get_all_raw_elem(){
     require "../the_connector/connect_area.php";
 
 	$result = "";
-    
-    $stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `addon`, `date_time` FROM `elements`");
+    $display_type = isset($_GET["display_by"]) ? ($_GET["display_by"]) : "";
+    if($display_type == "like"){
+        $stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `likes`, `addon`, `date_time` FROM `elements` ORDER BY `likes` DESC ");
+    } else if($display_type == "date-new"){
+        $stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `likes`, `addon`, `date_time` FROM `elements` ORDER BY `date_time` DESC ");
+    } else if($display_type == "date-old"){
+        $stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `likes`, `addon`, `date_time` FROM `elements` ORDER BY `date_time` ASC ");
+    }
+    else{
+        $stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `likes`, `addon`, `date_time` FROM `elements`");
+    }
+
+    //$stmt = $connect->prepare("SELECT `tag_id`, `user_id`, `tag_name`, `tag_type`, `tag_example`, `tag_description`, `default_style`, `likes`, `addon`, `date_time` FROM `elements`");
     $stmt->execute();
-    $stmt->bind_result($elem_id, $user_id, $elem_name, $type, $elem_example, $description, $elem_default, $addon, $date_time );
+    $stmt->bind_result($elem_id, $user_id, $elem_name, $type, $elem_example, $description, $elem_default, $likes, $addon, $date_time );
 
     if(!$stmt){
         $result = array("status"=>"false", "msg"=>"Could not get the coins symbols.");
     }elseif($stmt){
         while ($stmt->fetch()) {
-            $result .= '<span ondragstart="elem_drag(event, \''.$elem_name.'\')" draggable="true" class="the_bottom_elems" onclick="add_element_2_dashboard(\''.$elem_name.'\')">'.$elem_name.'</span>';
+            if($type == "inline"){
+                $result .= '<span ondragstart="elem_drag(event, \''.$elem_name.'\')" draggable="true" class="the_bottom_elems" onclick="add_element_2_dashboard(\''.$elem_name.'\')">'.$elem_name.'</span>';
+            }else{
+                $result .= '<span ondragstart="elem_drag(event, \''.$elem_name.'\')" draggable="true" class="the_bottom_elems_block" onclick="add_element_2_dashboard(\''.$elem_name.'\')">'.$elem_name.'</span>';
+            }
+            
             #array_push($result, array( "id"=>$elem_id, "user_id"=>$user_id, "elem_name"=>$elem_name, "type"=>$type, "elem_default"=>$elem_default, "elem_values"=>$elem_values, "addon"=>$addon, "description"=>$description, "likes"=>$likes, "property"=>$property, "date_time"=>$date_time) );
         }
     }
