@@ -1,6 +1,9 @@
 # backend
 The ACES software aid backend repo
 
+# Visual Explanation
+Please watch this video for more understanding: https://youtu.be/zBRju-UY83U
+
 # SET-UP
 To set-up, import the sql file into your local database system(like PHPMYADMIN).
 
