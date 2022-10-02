@@ -47,7 +47,7 @@ function get_all_elem(){
 
     }elseif($stmt){
         while ($stmt->fetch()) {
-            array_push($result, array( "id"=>$elem_id, "user_id"=>$user_id, "elem_name"=>$elem_name, "type"=>$type, "elem_default"=>$elem_default, "elem_values"=>$elem_values, "addon"=>$addon, "description"=>$description, "likes"=>$likes, "property"=>$property, "date_time"=>$date_time) );
+            array_push($result, array( "id"=>$elem_id, "user_id"=>$user_id, "elem_name"=>$elem_name, "type"=>$type, "elem_example"=>$elem_example, "description"=>$description, "elem_default"=>$elem_default, "likes"=>$likes, "addon"=>$addon, "date_time"=>$date_time) );
         }
     }
 	
