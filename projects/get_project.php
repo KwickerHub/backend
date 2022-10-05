@@ -2,8 +2,8 @@
 
 //will contain code to select from this table and more SQL Actions
 
-function get_projects_details($id){
-    require "../the_connector/connect_area.php";
+function get_projects_details($connect, $id){
+    //require "../the_connector/connect_area.php";
     $stmt = $connect->prepare("SELECT * FROM `projects` WHERE `projects_id`=?;");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -19,8 +19,8 @@ function get_projects_details($id){
 }
 
 
-function get_projects_details_by_name($name){
-    require "../the_connector/connect_area.php";
+function get_projects_details_by_name($connect, $name){
+    //require "../the_connector/connect_area.php";
     $stmt = $connect->prepare("SELECT * FROM `projects` WHERE `project_name`=?;");
     $stmt->bind_param("s", $name);
     $stmt->execute();

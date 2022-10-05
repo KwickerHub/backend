@@ -36,6 +36,7 @@
     				$_SESSION['uname'] = $user_existance["username"];
     				$_SESSION['userid'] = $user_existance["id"];
     				$_SESSION['user_code'] = $user_existance["unique_co"];
+                    $_SESSION['public_key'] = $user_existance["public_hash"];
     				$_SESSION['email'] = $email;
     				
     				ob_start();
