@@ -3,6 +3,7 @@ The ACES software aid backend repo
 
 # Visual Explanation
 Please watch this video for more understanding: https://youtu.be/zBRju-UY83U
+It is also proper that you clone the frontend Repository of this organisation for you to have a better visual understanding of your Backend lines of code.
 
 # SET-UP
 To set-up, import the sql file into your local database system(like PHPMYADMIN).
