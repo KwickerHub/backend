@@ -14,7 +14,7 @@ if( isset($_SESSION['userid']) ){
     //$user = get_user_by_code($connect, $_SESSION['user_code']);
     $user_id = $_SESSION["userid"];
     if( isset($_POST["project_content"]) and isset($_POST["project_name"])){
-        $user_id = $user_id;
+        //$user_id = $user_id;
         //TODO::
         // receive the public key from the user and verify it with the secretly stored privately key
         // we may need to return the user_id after verification and stop showing it to users...
@@ -26,9 +26,6 @@ if( isset($_SESSION['userid']) ){
         // $date = date('Y-m-d H:i:s');
         // $date_updated = date('Y-m-d H:i:s');
     
-        
-    
-        
         $project_content = $_POST["project_content"];
     
         $array = array();
