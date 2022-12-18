@@ -9,8 +9,10 @@ include "../publicity/mailer.php";
 include "get_project.php";
 
 $output = "";
+session_start();
 if(isset($_POST["project_name"])){
-    $user_id = cleaner_4_DB($_POST["user_id"]);
+    //$user_id = cleaner_4_DB($_POST["user_id"]);
+    $user_id = cleaner_4_DB($_SESSION["userid"]);
     $project_location = cleaner_4_DB($_POST["project_location"]);
     // $project_description = cleaner_4_DB($_POST["project_description"]);
     // $type = isset($_POST["type"]) ? cleaner_4_DB($_POST["type"]) : "private"; 

@@ -12,7 +12,7 @@ $array = ["status"=>"false", "msg"=>"No possible connection"];
 session_start();
 if( isset($_SESSION['userid']) ){
     //$user = get_user_by_code($connect, $_SESSION['user_code']);
-    $user_id = $_SESSION["userid"];
+    $user_id = cleaner_4_DB($_SESSION["userid"]);
     if( isset($_POST["project_content"]) and isset($_POST["project_name"])){
         //$user_id = $user_id;
         //TODO::

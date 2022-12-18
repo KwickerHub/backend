@@ -9,8 +9,11 @@ include "../publicity/mailer.php";
 include "get_project.php";
 
 $array = ["status"=>"false", "msg"=>"No possible connection"];
+session_start();
 if(isset($_POST["project_name"])){
-    if( isset($_POST["user_id"]) ){
+    if( isset($_SESSION["userid"])  ){
+
+        $user_id = cleaner_4_DB($_SESSION["userid"]);
         // $project_description = cleaner_4_DB($_POST["project_description"]);
         // $type = isset($_POST["type"]) ? cleaner_4_DB($_POST["type"]) : "private"; 
         // $project_settings = isset($_POST["project_settings"]) ? cleaner_4_DB($_POST["project_settings"]) : ""; 
@@ -22,9 +25,8 @@ if(isset($_POST["project_name"])){
 
         //$project_path = '../../storage/projects/' . $project_location ;
         //$project_content = $_POST["project_content"];
-        $user_id = cleaner_4_DB($_POST["user_id"]);
+        //$user_id = cleaner_4_DB($_POST["user_id"]);
         $project_name = cleaner_4_DB($_POST["project_name"]);
-
         $array = array();
         $project_already = 0;
 

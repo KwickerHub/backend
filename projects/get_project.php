@@ -85,8 +85,10 @@ function get_all_raw_projects(){
 }
 
 
+// require "../the_connector/connect_area.php";
+// echo(num_count_user_project($connect, "testing", 0));
 function num_count_user_project($connect, $project_name, $user_id){
-    #require "the_connector/connect_area.php";
+    #require "../the_connector/connect_area.php";
 	$num_rows = 0;
     $stmt = $connect->prepare("SELECT COUNT(*) FROM `projects` WHERE `user_id` = ? AND `project_name`=? " );
     $stmt->bind_param("is", $user_id, $project_name);
