@@ -80,7 +80,11 @@ if( isset($_SESSION['userid']) ){
 		}else{
 			$array = ["status"=>"false", "msg"=>"You may have entered invalid details."];
 		}
-	}
+	}else{
+        $array = ["status"=>"false", "msg"=>"Project name and description not sent"];
+    }
+}else{
+	$array = ["status"=>"false", "msg"=>"Invalid User: Looks like you are not logged in."];
 }
 echo json_encode($array);
 
