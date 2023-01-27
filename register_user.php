@@ -33,9 +33,9 @@ if( isset($_POST["email"]) and isset($_POST["password"])){
 		$array = ["status"=>"false", "msg"=>"This Account is already in existance."];
 	}else if($user_already < 1 AND (filter_var($email, FILTER_VALIDATE_EMAIL))  ){
 
-		 $inserter = $connect->prepare("INSERT INTO `clients`(`id`, `username`, `email`, `password`, `verified`, `unique_co`, `public_hash`, `private_hash`, `last_in`, `devices`, `addon`, `date_time`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		 $inserter = $connect->prepare("INSERT INTO `clients`(`id`, `username`, `email`, `password`, `verified`, `unique_co`, `public_hash`, `private_hash`, `last_in`, `devices`, `addon`, `date_time`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		
-		$inserter->bind_param("sssisssss", $username, $email, $password, $verified, $randt, $public_hash, $private_hash, $date_time, $device, $add_on, $date_time );		
+		$inserter->bind_param("sssisssssss", $username, $email, $password, $verified, $randt, $public_hash, $private_hash, $date_time, $device, $add_on, $date_time );		
 		$inserter->execute();
 
 		if (!$inserter){
