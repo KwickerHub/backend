@@ -48,6 +48,12 @@ if( isset($_POST["email"]) and isset($_POST["password"])){
 				#$user_id = $user_existance["id"];
 				#$code = $user_existance["unique_co"];
 				$array = ["status"=>"true", "user"=>$user_existance, "msg"=>"Registration Successful. Check your mail box for our verification link."];
+				session_start();
+    			$_SESSION['uname'] = $user_existance["username"];
+    			$_SESSION['userid'] = $user_existance["id"];
+    			$_SESSION['user_code'] = $user_existance["unique_co"];
+                $_SESSION['public_key'] = $user_existance["public_hash"];
+    			$_SESSION['email'] = $email;
 				mail_on_signup($email, $randt);
 			}else{
 				$array = ["status"=>"false", "msg"=>"We had some issues with computing your details"];

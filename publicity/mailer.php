@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 include "knowledge_power.php";
 
-mail_on_signup("kwickerhub@gmail.com", 567383);
+//mail_on_signup("kwickerhub@gmail.com", 567383);
 function mail_on_signup($to, $randt){
     //$to = $email;
     $subject = "KwickerHub";
