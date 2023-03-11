@@ -15,6 +15,14 @@ function mail_on_signup($to, $randt){
     //$to = $email;
     $subject = "KwickerHub";
     $body = "Please use this code to verify your account with KwickerHub " . $randt . " <br/> <br/> Ignore this message if this account was not created by you. " ;
+    #$auth_domain = "icogrowser@gmail.com"; // 'yourdomain.com or verified email address'
+
+    Send_Mail_2($to,$subject,$body);
+    
+}
+
+//Send_Mail_2("kwickerhub@gmail.com", "KwickerHub", "Please use this code to verify your account with KwickerHub "); 
+function Send_Mail_2_use_gmail($to,$subject,$body) {
     $auth_domain = "icogrowser@gmail.com"; // 'yourdomain.com or verified email address'
 
     $from = "icogrowser@gmail.com"; // $from = "verified_email address";
@@ -38,14 +46,14 @@ function mail_on_signup($to, $randt){
         return false;
     else
         return true;
-    
+
 }
 
-//Send_Mail_2("kwickerhub@gmail.com", "KwickerHub", "Please use this code to verify your account with KwickerHub "); 
+#Send_Mail_2("nkenyor@gmail.com", "KwickerHub", " We have different kinds of dance here in Africa "); 
 function Send_Mail_2($to,$subject,$body) {
-    $auth_domain = "icogrowser@gmail.com"; // 'yourdomain.com or verified email address'
+    $auth_domain = "kwickerhub.com"; // 'yourdomain.com or verified email address'
 
-    $from = "icogrowser@gmail.com"; // $from = "verified_email address";
+    $from = "mail@kwickerhub.com"; // $from = "verified_email address";
     $mail = new PHPMailer();
     $mail->IsSMTP(true); // SMTP
     $mail->SMTPAuth   = true;  // SMTP authentication
