@@ -87,7 +87,7 @@ CREATE TABLE `profile` (
   PRIMARY KEY (`id`),
   KEY `User_id` (`user_id`),
   CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `clients` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 
