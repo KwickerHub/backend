@@ -17,7 +17,8 @@
 		//$id = intval(b_cleaner($_GET["id"]));
         $user_existance = get_user_details_profile($connect, $id);
 		$project_details= get_project_details($connect, $id);
-        $array = ["name" => $user_existance["name"],"designation" => $user_existance["designation"],"age"=>$user_existance["age"],"location"=>$user_existance["location"],"status"=>$user_existance["status"],"date"=>$user_existance["joined_date"],"bio"=>$user_existance["bio"],"achievements"=>$user_existance["achievements"],"intro"=>$user_existance["intro"],"skills"=>$user_existance["skills"],"projects"=>$project_details["project_name"],"status"=>"True"];
+    $array = ["name" => $user_existance["name"],"designation" => $user_existance["designation"],"age"=>$user_existance["age"],"location"=>$user_existance["location"],"status"=>$user_existance["status"],"date"=>$user_existance["joined_date"],"bio"=>$user_existance["bio"],"achievements"=>$user_existance["achievements"],"intro"=>$user_existance["intro"],"skills"=>$user_existance["skills"],"projects"=>$project_details["project_name"],"status"=>"True"];
+
 
 		//print(num_count($connect, $user_id));
 		
