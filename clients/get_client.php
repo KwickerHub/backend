@@ -17,6 +17,24 @@ function get_user_details($id){
 		$stmt->close();
 }
 
+
+function get_project_details($id){
+	$user_id= $id;
+	require "../the_connector/connect_area.php";
+	$stmt = $connect->prepare("SELECT * FROM `projects` WHERE `user_id`=?; ");
+	$stmt->bind_param("i", $user_id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	if(!$stmt){
+		echo "could not get the results";
+		return array();
+	}else{
+		$row = $result->fetch_assoc();
+		return $row;
+}
+	$stmt->close();
+}
+
 function get_user_by_email($connect, $email){
 		$email= $email;
 		#require "the_connector/connect_area.php";

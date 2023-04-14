@@ -48,6 +48,8 @@ CREATE TABLE `assitance` (
 -- Table structure for table `attributes`
 --
 
+
+
 CREATE TABLE `attributes` (
   `attr_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -62,6 +64,32 @@ CREATE TABLE `attributes` (
   `property` varchar(360) NOT NULL,
   `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profile`
+--
+
+CREATE TABLE `profile` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(12) NOT NULL,
+  `name` varchar(19) NOT NULL,
+  `designation` varchar(16) NOT NULL,
+  `age` int(13) NOT NULL,
+  `location` varchar(13) NOT NULL,
+  `status` varchar(13) NOT NULL,
+  `joined_date` date NOT NULL,
+  `bio` varchar(400) NOT NULL,
+  `achievements` varchar(20) NOT NULL,
+  `intro` varchar(400) NOT NULL,
+  `skills` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `User_id` (`user_id`),
+  CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `clients` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 --
 -- Dumping data for table `attributes`
