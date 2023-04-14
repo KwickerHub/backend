@@ -67,11 +67,35 @@ function get_all_raw_style(){
 
     }elseif($stmt){
         while ($stmt->fetch()) {
-            $result .= '<li class="each_item">
-                <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$style_name.'_state">
-                <label>'.$style_name.'</label>
-                <input onkeyup="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'" list="size" class="the_input_side" type="text" name="style_'.$style_name.'_value">
-            </li>';
+            if(strstr(strtolower($style_name), "color")  ){
+                $result .= '<li class="each_item">
+                    <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$style_name.'_state">
+                    <label>'.$style_name.'</label>
+                    <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'" type="color" class="the_input_side" name="style_'.$style_name.'_value">
+                </li>';
+            }else if(strstr(strtolower($style_name), "size") or strstr(strtolower($style_name), "width") or strstr(strtolower($style_name), "height") or strstr(strtolower($style_name), "top") or strstr(strtolower($style_name), "bottom") or strstr(strtolower($style_name), "left") or strstr(strtolower($style_name), "right") or strstr(strtolower($style_name), "padding")    ){
+                $result .= '<li class="each_item">
+                    <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$style_name.'_state">
+                    <label>'.$style_name.'</label>
+                    <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'" list="size" class="the_input_side" type="text" name="style_'.$style_name.'_value">
+                </li>';
+            }else if(  $style_name == "display" or $style_name == "float" or $style_name == "position" ){
+                $the_datalist = "style_".$style_name."_data_list";
+                $result .= '<li class="each_item">
+                    <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$style_name.'_state">
+                    <label>'.$style_name.'</label>
+                    <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'" list="'.$the_datalist.'" class="the_input_side" type="text" name="style_'.$style_name.'_value">
+                </li>';
+            }
+            else{
+                $result .= '<li class="each_item">
+                    <input onchange="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$style_name.'_state">
+                    <label>'.$style_name.'</label>
+                    <input onkeyup="style_changed(\''.$style_name.'\')" id="style_'.$style_name.'" class="the_input_side" type="text" name="style_'.$style_name.'_value">
+                </li>';
+                }
+
+            
             #array_push($result, array( "id"=>$style_id, "user_id"=>$user_id, "style_name"=>$style_name, "type"=>$type, "style_default"=>$style_default, "style_values"=>$style_values, "addon"=>$addon, "description"=>$description, "likes"=>$likes, "property"=>$property, "date_time"=>$date_time) );
         }
     }

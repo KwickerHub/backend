@@ -66,11 +66,26 @@ function get_all_raw_attr(){
 
     }elseif($stmt){
         while ($stmt->fetch()) {
-            $result .= '<li class="each_item">
-                <input onchange="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$attr_name.'_state">
-                <label>'.$attr_name.'</label>
-                <input onkeyup="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'" list="'.$type.'" class="the_input_side" type="text" name="attr_'.$attr_name.'_value">
-            </li>';
+            if(strstr(strtolower($attr_name), "color")  ){
+                $result .= '<li class="each_item">
+                    <input onchange="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$attr_name.'_state">
+                    <label>'.$attr_name.'</label>
+                    <input onkeyup="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'" class="the_input_side" type="color" name="attr_'.$attr_name.'_value">
+                </li>';
+            }
+            else if(strstr(strtolower($attr_name), "size") or strstr(strtolower($attr_name), "width") or strstr(strtolower($attr_name), "height") or strstr(strtolower($attr_name), "top") or strstr(strtolower($attr_name), "bottom") or strstr(strtolower($attr_name), "left") or strstr(strtolower($attr_name), "right") or strstr(strtolower($attr_name), "padding")    ){
+                $result .= '<li class="each_item">
+                    <input onchange="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$attr_name.'_state">
+                    <label>'.$attr_name.'</label>
+                    <input onkeyup="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'" list="size"  class="the_input_side"  type="text" name="attr_'.$attr_name.'_value">
+                </li>';
+            }else{
+                $result .= '<li class="each_item">
+                    <input onchange="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'_status" class="the_check_side" type="checkbox" checked value="yes" name="_'.$attr_name.'_state">
+                    <label>'.$attr_name.'</label>
+                    <input onkeyup="attr_changed(\''.$attr_name.'\')" id="attr_'.$attr_name.'" list="'.$type.'" class="the_input_side" type="text" name="attr_'.$attr_name.'_value">
+                </li>';
+            }
             //$result .= "dance dance to the debug";
             #array_push($result, array( "id"=>$attr_id, "user_id"=>$user_id, "attr_name"=>$attr_name, "type"=>$type, "attr_default"=>$attr_default, "attr_values"=>$attr_values, "addon"=>$addon, "description"=>$description, "likes"=>$likes, "property"=>$property, "date_time"=>$date_time) );
         }
