@@ -51,5 +51,34 @@ if(isset($_POST["project_name"])){
 
 echo json_encode($array);
 
+function fetchProjectDetails($project_id) {
+    $stmt = $conn->prepare("SELECT project_name, project_location FROM projects WHERE project_id = ?");
+    $stmt->bind_param("i", $project_id);
+    $stmt->execute();
+    $stmt->bind_result($project_name, $project_location);
+    $stmt->fetch();
+    $stmt->close();
+
+    $project_details = array(
+        "project_id" => $project_id,
+        "project_name" => $project_name,
+        "project_location" => $project_location
+    );
+    return $project_details;
+
+}
+if (isset($_GET['project_id'])) {
+    // Fetch project details using the provided project_id
+    $project_id = $_GET['project_id'];
+    $project_details = fetchProjectDetails($project_id);
+    
+    // Convert the associative array to JSON and send as response
+    header('Content-Type: application/json');
+    echo json_encode($project_details);
+} else {
+    // Send an error response if project_id is not provided
+    http_response_code(400);
+    echo json_encode(array("error" => "project_id parameter is missing"));
+}
 
 ?>
